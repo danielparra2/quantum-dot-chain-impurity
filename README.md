@@ -156,7 +156,9 @@ $$
 - Unstructured triangular mesh with geometric refinement towards the donor.
 - Dirichlet boundary at `R = 200 nm`; finite-size check at `R = 300 nm`.
 - Generalized eigenvalue problem `K u = E M u`, shift-invert solver.
-- Validation against the exact 2D donor: **≤ 0.008 meV**.
+- Validation against the exact 2D donor: **≤ 0.008 meV**. The same problem solved with an
+  independent from-scratch FEM code:
+  [`2d-hydrogen-atom-hydrogenic-impurity`](https://github.com/danielparra2/2d-hydrogen-atom-hydrogenic-impurity).
 
 </td>
 </tr>
