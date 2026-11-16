@@ -1,13 +1,14 @@
 <div align="center">
 
-# Quantum dot chain with a donor impurity
+# Five quantum dots, one impurity, and a field
 
-### FEM simulation of a five-dot GaAs/AlGaAs chain under an electric field
+### How a single donor rewrites the spectrum of a quantum dot chain
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![COMSOL](https://img.shields.io/badge/COMSOL-6.3%20%2F%206.4-FF6F00)](https://www.comsol.com/)
 [![NumPy](https://img.shields.io/badge/NumPy-SciPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/Code-MIT-green.svg)](LICENSE)
+[![Figures: CC BY 4.0](https://img.shields.io/badge/Figures-CC%20BY%204.0-lightgrey.svg)](figures/LICENSE)
 [![Thesis](https://img.shields.io/badge/Thesis-Laureate%205.0-blueviolet)](https://github.com/danielparra2)
 
 **BSc Physics thesis · Universidad Industrial de Santander (UIS) · 2026**
@@ -15,31 +16,114 @@
 </div>
 
 <p align="center">
-  <img src="figures/EvsXiUniforme.png" alt="Energy vs impurity position for three inter-dot separations" width="92%">
+  <img src="figures/EvsXiUniforme.png" alt="Energy versus impurity position for three inter-dot separations" width="90%">
 </p>
 
 <p align="center">
-  <sub><b>Energy vs impurity position</b> for three inter-dot separations (d = -10, 0, 10 nm). The inset resolves the
-  sub-meV oscillations of the ground state; red dots mark the impurity at x<sub>i</sub> = -110, 0 and 25 nm.</sub>
+  <sub><b>The spectrum that started the thesis.</b> Energy of the first ten states versus the impurity position
+  x<sub>i</sub>, for d = -10, 0 and 10 nm. The inset resolves the sub-meV oscillations of the ground state.
+  Red dots mark x<sub>i</sub> = -110, 0 and 25 nm.</sub>
 </p>
+
+<p align="center">
+  <img src="figures/animations/field_battery_devil.gif" alt="A battery applies an electric field and a cartoon devil pulls the electron across the chain" width="62%">
+</p>
+
+<p align="center">
+  <sub><b>The thesis in one loop.</b> A battery applies an electric field; the little devil pulls the electron
+  across the chain; the induced dipole flips. The cartoon is from the defense — the curves behind it are the real
+  COMSOL simulation. <a href="docs/animations.md">All animations →</a></sub>
+</p>
+
+> [!TIP]
+> **The thesis in one sentence**
+> In a chain of five coupled quantum dots, a single donor impurity barely changes the ground-state energy
+> (≈ **−21.41 meV**, versus **−21.90 meV** for the isolated 2D donor) — yet it controls the symmetry, the
+> localization and the field response of every excited state.
 
 ---
 
-## What is this?
+## The result that breaks intuition
 
-A donor impurity is placed inside a **linear chain of five laterally coupled quantum dots**
-(GaAs dots embedded in an Al<sub>0.3</sub>Ga<sub>0.7</sub>As matrix). The repository contains the
-raw COMSOL exports, the Python/Jupyter analysis, and the final figures of the thesis:
+<p align="center">
+  <img src="figures/symmetry_s_p.png" alt="s-type orbital with no node and p-type orbital with one node" width="82%">
+</p>
 
-> **Effect of a donor impurity on the optoelectronic properties of a linear quantum dot chain.**
+The spectrum follows a simple **symmetry rule**, and the rule is what makes the physics surprising:
 
-The central question: *how does the position of the impurity, the inter-dot separation, and an
-external electric field reshape the energy spectrum and the induced dipole of the chain?*
+| State | Shape | At the centre of a dot | At the bottleneck between dots |
+|---|---|---|---|
+| **s-type** | no node | **minimum** | maximum |
+| **p-type** | one node | **maximum** | **minimum** |
 
-## Physics in one minute
+The p-type state has a **nodal plane** in the middle. When the impurity sits at a bottleneck, the node fits
+naturally into the constriction: each lobe occupies a neighbouring cavity and the energy drops. When the
+impurity sits at the centre of a dot, both lobes are forced into the same cavity and the energy rises.
+This is why the first excited state oscillates **out of phase** with the ground state in the figure above.
 
-Within the **effective-mass approximation**, the electron feels the quantum-dot confinement, the
-screened Coulomb attraction of the donor, and the external field:
+**Four counterintuitive numbers**
+
+| Observation | Value | Why it matters |
+|---|---|---|
+| Ground state of the chain | **−21.41 meV** | Almost identical to the isolated donor (−21.90 meV): **Coulomb wins over confinement** |
+| Critical field vs separation | **1.2 → 1.0 → 0.8 kV/cm** for d = −10 → 0 → 10 nm | A **more separated** chain needs **less** field to polarize — the opposite of the naive expectation |
+| Dipole hierarchy | `abs(p₁) < abs(p₂)` in the symmetric chain | Structural asymmetry can **invert** it (`R₅ = 50 nm`) |
+| Fifth dot | **donor** for `R₅ < 30 nm`, **acceptor** for `R₅ > 30 nm` | A geometric knob that changes the sign of the charge transfer |
+
+And one more, hidden in the curves: when two states share the same symmetry, their levels **never cross**.
+They repel. That is the **Von Neumann–Wigner anticrossing** around `R₅ = 35 nm` in
+[`figures/EvsR5_noImpureza_orbitales.png`](figures/EvsR5_noImpureza_orbitales.png).
+
+---
+
+## Watch the physics
+
+<table>
+<tr>
+<td width="50%" align="center">
+  <img src="figures/animations/wavefunction_localization.gif" alt="Wavefunction moving along the quantum dot chain" width="100%"><br>
+  <sub><b>Localization.</b> The probability density follows the impurity as it moves along the chain
+  (COMSOL, uniform chain).</sub>
+</td>
+<td width="50%" align="center">
+  <img src="figures/animations/donor_acceptor_battle.gif" alt="Cartoon devil and crystal monster pulling an electron between quantum dots" width="100%"><br>
+  <sub><b>Donor or acceptor?</b> The fifth dot fights for the electron. Its size decides who wins.</sub>
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="50%" align="center">
+  <img src="figures/animations/magician.gif" alt="Cartoon magnifying glass inspecting a quantum dot" width="70%"><br>
+  <sub><b>The magnifying-glass analogy.</b> Finding the impurity is a localization problem.</sub>
+</td>
+<td width="50%" align="center">
+  <img src="figures/analogies/dimensionality.jpg" alt="Brick with zero, one, two and three dimensional blocks" width="70%"><br>
+  <sub><b>Dimensionality, the cartoon version.</b> From bulk to a zero-dimensional dot: fewer dimensions,
+  more quantum behaviour.</sub>
+</td>
+</tr>
+</table>
+
+<details>
+<summary><b>Easter egg: Michin, the quantum cat</b> (click)</summary>
+<p align="center">
+  <img src="figures/animations/quantum_cat.gif" alt="Cat-shaped wavefunction in COMSOL" width="46%"><br>
+  <sub>A cat-shaped eigenmode. Because why not. The real cat is named Michin.</sub>
+</p>
+</details>
+
+---
+
+## The system
+
+<p align="center">
+  <img src="figures/chain_schematic.jpg" alt="Schematic of the five-dot chain and its potential profile" width="72%">
+</p>
+
+Five circular GaAs dots embedded in an Al<sub>0.3</sub>Ga<sub>0.7</sub>As matrix. A donor impurity sits at
+position `x_i` along the chain axis. The in-plane Hamiltonian in the effective-mass approximation is
 
 $$
 \hat H = -\frac{\hbar^2}{2m^*}\nabla^2
@@ -48,132 +132,157 @@ $$
 \;+\; e\,\mathbf F\cdot\mathbf r .
 $$
 
-- GaAs parameters: `m* = 0.067 m0`, `εr = 12.9`, `ΔEc = 213.84 meV` for `x_Al = 0.3`.
-- Isolated 2D hydrogenic donor: `E_n = -Ry*/(n+1/2)²`, with `Ry* ≈ 5.478 meV`.
-- The numerical model reproduces this limit to **≤ 0.008 meV**, validating the FEM pipeline.
+<table>
+<tr>
+<td width="50%">
+
+**Material parameters**
+
+| Parameter | Value |
+|---|---|
+| `m*` (GaAs) | `0.067 m₀` |
+| `εr` (GaAs) | `12.9` |
+| `x_Al` | `0.3` |
+| `ΔEc` | `213.84 meV` |
+| `a*` | `10.19 nm` |
+| `Ry*` | `5.478 meV` |
+
+</td>
+<td width="50%">
+
+**Numerical method**
+
+- 2D finite elements (COMSOL), quadratic Lagrange elements.
+- Unstructured triangular mesh with geometric refinement towards the donor.
+- Dirichlet boundary at `R = 200 nm`; finite-size check at `R = 300 nm`.
+- Generalized eigenvalue problem `K u = E M u`, shift-invert solver.
+- Validation against the exact 2D donor: **≤ 0.008 meV**.
+
+</td>
+</tr>
+</table>
+
+The full method, the mesh strategy and the export procedure are in
+[`docs/metodo.md`](docs/metodo.md).
+
+---
 
 ## Results
 
 <table>
 <tr>
 <td width="50%" align="center">
-  <img src="figures/EvsR5_noImpureza_orbitales.png" width="100%"><br>
-  <sub><b>Non-uniform chain.</b> Levels vs inter-dot distance R<sub>5</sub>, with FEM orbitals at the
-  avoided crossings.</sub>
+  <img src="figures/EvsR5_noImpureza_orbitales.png" alt="Energy versus R5 with orbital insets" width="100%"><br>
+  <sub><b>Non-uniform chain.</b> Sub-bands, avoided crossings and the orbital character at
+  R<sub>5</sub> = 10, 35 and 50 nm.</sub>
 </td>
 <td width="50%" align="center">
-  <img src="figures/Momentos_dipolares_uniforme.png" width="100%"><br>
+  <img src="figures/Momentos_dipolares_uniforme.png" alt="Induced dipole versus electric field" width="100%"><br>
   <sub><b>Induced dipole.</b> Two well-defined polarization regimes separated by a sharp jump at the
-  anticrossing field.</sub>
+  critical field.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
-  <img src="figures/EvsF_uniforme.png" width="100%"><br>
-  <sub><b>Energy vs electric field</b> for the uniform chain (d = -10, 0, 10 nm).</sub>
+  <img src="figures/EvsF_uniforme.png" alt="Energy versus electric field for the uniform chain" width="100%"><br>
+  <sub><b>Energy vs field.</b> The anticrossing moves to lower fields as the dots separate.</sub>
 </td>
 <td width="50%" align="center">
-  <img src="figures/malla_dominio.png" width="100%"><br>
-  <sub><b>Multiscale mesh.</b> Geometric refinement towards the donor and Dirichlet boundary at R = 200 nm.</sub>
+  <img src="figures/EvsR5xi_R5.png" alt="Energy versus R5 with the impurity at the fifth dot" width="100%"><br>
+  <sub><b>Asymmetry matters.</b> With the donor at the fifth dot, the edge is no longer equivalent to the
+  centre.</sub>
 </td>
 </tr>
 </table>
 
-**Takeaways**
+The complete figure set is indexed in [`docs/figuras.md`](docs/figuras.md).
 
-| Observation | Value |
-|---|---|
-| Ground state of the chain | ≈ **-21.41 meV**, close to the isolated donor (-21.90 meV) |
-| Coulomb vs confinement | The donor dominates; structure effects appear at the chain ends and at material changes (d = 0, 10 nm) |
-| Field response | Two polarization branches: `p1 ≈ -15` → `p2 ≈ +15` (a.u.) across the anticrossing |
-| FEM vs analytic validation | **≤ 0.008 meV** (2D hydrogenic limit) |
+---
 
-## Repository layout
+## Data and reproducibility
 
-```
-quantum-dot-chain-impurity/
-├── data/                 32 COMSOL exports (.txt) + manifest.csv
-├── notebooks/
-│   ├── 01_analisis_exploratorio.ipynb   reading, eigenvalue sorting, dipole analysis
-│   └── 02_figuras_tesis.ipynb           final thesis figures
-├── figures/              final PNGs + auxiliary orbital images
-│   └── aux/{von_neumann,momento}/
-├── scripts/
-│   ├── malla_dominio.py           schematic of the multiscale mesh
-│   ├── generar_manifest.py        rebuild data/manifest.csv from COMSOL headers
-│   └── consolidar.py              optional single-file consolidated dataset
-├── docs/
-│   ├── metodo.md           model, parameters, mesh and COMSOL export procedure
-│   ├── figuras.md          figure ↔ thesis result map
-│   └── parametros_comsol.txt
-├── requirements.txt
-├── CITATION.cff
-└── LICENSE
-```
-
-## Data provenance
-
-Every `.txt` file is a **direct export from COMSOL Multiphysics** and keeps its original header:
+**32 COMSOL exports** (8.3 MB) with their original headers:
 
 ```
 % Model:    qd5=10_d=0.mph
 % Version:  COMSOL 6.4.0.429
 % Date:     Aug 23 2026, 12:19
-% Dimension: 1
 % Nodes:    4020
 ...
 ```
 
-The mapping **file → COMSOL model → version → export date → physical case** is in
-[`data/manifest.csv`](data/manifest.csv). The 32 exports cover:
-
 | Family | Files | What it scans |
 |---|---|---|
-| Uniform chain, energy vs impurity position | `caso1/2/3.txt` | `x_i` for `d = -10, 0, 10 nm` |
-| Uniform chain, energy vs field | `c1_F, c2_2_F, c3_F.txt` | `F` from -2 to 10 kV/cm |
-| Non-uniform chain, no impurity | `EvsR5sind*.txt` | `R_5` for three `d` |
-| Non-uniform chain, impurity at `x_i = 0, R_1, R_5` | `EvsR5xi=*.txt` | `R_5` |
-| Non-uniform chain, fixed `R_5` | `EvsxiR5=*.txt` | `x_i` for `R_5 = 10, 50 nm` |
+| Uniform chain, energy vs `x_i` | `caso1/2/3.txt` | `x_i` for `d = -10, 0, 10 nm` |
+| Uniform chain, energy vs field | `c1_F, c2_2_F, c3_F.txt` | `F` from −2 to 10 kV/cm |
+| Non-uniform chain, no impurity | `EvsR5sind*.txt` | `R₅` for three `d` |
+| Impurity at `x_i = 0, R₁, R₅` | `EvsR5xi=*.txt` | `R₅` |
+| Fixed `R₅ = 10, 50 nm` | `EvsxiR5=*.txt` | `x_i` |
 | Asymmetric chain, dipole | `AEvsF_R10/R50*.txt` | `F` for `R = 10, 50 nm` |
 
-> `X` is stored in **meters** for position scans and in **kV/cm** for field scans, exactly as the
-> notebooks expect. No post-processing was applied to the raw files.
+Every file is mapped to its COMSOL model, version and export date in
+[`data/manifest.csv`](data/manifest.csv). The raw exports are **not merged**: the per-file header is the
+provenance. If you need one table, run `python scripts/consolidar.py`.
 
-## Run it
+**Notebooks**
+
+| Notebook | What it does |
+|---|---|
+| [`01_data_pipeline.ipynb`](notebooks/01_data_pipeline.ipynb) | Reads the exports, sorts eigenvalues into modes, explains units and pitfalls |
+| [`02_results_figures.ipynb`](notebooks/02_results_figures.ipynb) | Rebuilds the final thesis figures step by step |
+| [`03_dipole_analysis.ipynb`](notebooks/03_dipole_analysis.ipynb) | Extracts `p₁`, `p₂` and the critical field |
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-jupyter lab notebooks/02_figuras_tesis.ipynb
+jupyter lab notebooks/01_data_pipeline.ipynb
 ```
 
-The notebooks are self-contained and write their figures to `figures/`. Outputs were stripped
-from the committed notebooks to keep the repository light; the rendered figures are included.
+No FEM is re-run. The notebooks only read the existing exports and plot.
 
-To rebuild the COMSOL metadata table after adding new exports:
+---
 
-```bash
-python scripts/generar_manifest.py
+## Thesis at a glance
+
+| | |
+|---|---|
+| **Title** | *Effect of a donor impurity on the optoelectronic properties of a linear quantum dot chain* |
+| **Author** | Daniel Parra Parra |
+| **Director** | Willian Gutiérrez Niño |
+| **Institution** | Universidad Industrial de Santander (UIS), Bucaramanga, Colombia |
+| **Year** | 2026 |
+| **Grade** | **5.0 — Laureate thesis** |
+| **Keywords** | coupled quantum dots · donor impurity · electron localization · structural asymmetry · optoelectronic response |
+| **Manuscript** | Kept in a separate repository; available on request. |
+
+## Repository layout
+
+```
+quantum-dot-chain-impurity/
+├── data/                 32 COMSOL exports + manifest.csv
+├── notebooks/            01 data pipeline · 02 figures · 03 dipole analysis
+├── figures/              final figures, auxiliary orbital images, animations, analogies
+├── scripts/              manifest builder, consolidator, mesh schematic
+├── docs/                 method · figure index · animations · defense notes
+├── requirements.txt      numpy · scipy · pandas · matplotlib · jupyterlab
+├── CITATION.cff
+└── LICENSE
 ```
 
-## Method & validation
+---
 
-The numerical method, mesh strategy, boundary conditions and extraction procedure are documented
-in [`docs/metodo.md`](docs/metodo.md). The FEM model was validated against the exact 2D hydrogenic
-donor before being applied to the chain — the same atom solved from scratch with an in-house
-P2 finite-element code is available in
-[`hydrogenic-atom-2d-fem`](https://github.com/danielparra2/hydrogenic-atom-2d-fem).
-
-## Author
-
-**Daniel Parra Parra** — Computational physicist, Universidad Industrial de Santander (UIS).
-Laureate thesis (5.0, 2026). Interests: AI for Science, numerical methods, quantum systems.
-
-- GitHub: [@danielparra2](https://github.com/danielparra2)
-- Email: [sasukeda25@gmail.com](mailto:sasukeda25@gmail.com)
+## Citation and license
 
 If you use this material, please cite it via [`CITATION.cff`](CITATION.cff).
 
-## License
+- **Code:** MIT — see [`LICENSE`](LICENSE).
+- **Original figures and animations:** CC BY 4.0 — see [`figures/LICENSE`](figures/LICENSE).
+- Third-party cartoon stills used as analogies in the defense are included for context only; they are not
+  covered by the CC BY license.
 
-Released under the **MIT License** — see [`LICENSE`](LICENSE).
+<div align="center">
+
+**Built with COMSOL Multiphysics + Python (NumPy, pandas, Matplotlib).**
+**Author:** [Daniel Parra Parra](https://github.com/danielparra2) · sasukeda25@gmail.com
+
+</div>
