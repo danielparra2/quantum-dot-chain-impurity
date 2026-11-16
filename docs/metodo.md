@@ -98,8 +98,8 @@ exports.
 
 ## 5. Eigenvalue ordering
 
-COMSOL returns eigenvalues unsorted for each value of the sweep variable. The notebooks sort by
-`(X, eigenvalue)` and assign mode indices with a cumulative count, so that mode 1 is always the
+COMSOL returns eigenvalues unsorted for each value of the sweep variable. `01_data_pipeline.ipynb`
+sorts by `(X, eigenvalue)` and assign mode indices with a cumulative count, so that mode 1 is always the
 ground state, mode 2 the first excited state, and so on. This step is essential before plotting
 or comparing curves.
 
@@ -115,7 +115,61 @@ m = Σ (x - x0)(y - y0) / Σ (x - x0)²
 with the two segments joined at the local maximum `(x0, y0)` of the selected energy branch. The
 fitted slopes are then converted to the `p1` / `p2` plateau values reported in the figures.
 
-## 7. Caveats
+The implementation is shared in `notebooks/chain_utils.py` (`fit_two_lines`) and demonstrated in
+`notebooks/03_dipole_analysis.ipynb`.
+
+## 7. Counterintuitive results
+
+These are the results worth highlighting when explaining the thesis.
+
+### 7.1 The symmetry rule (s vs p)
+
+- **s-type** states have no node. Their energy is **minimum** when the impurity sits at the
+  centre of a dot and **maximum** at the bottlenecks between dots.
+- **p-type** states have one node. Their energy is **maximum** at the centre of a dot and
+  **minimum** at the bottlenecks: the nodal plane fits naturally into the constriction, so each
+  lobe occupies a neighbouring cavity.
+
+This rule explains why the first excited state oscillates out of phase with the ground state in
+`figures/EvsXiUniforme.png`.
+
+### 7.2 The ground state is pinned by the donor
+
+For every separation `d`, the ground state stays near **-21.41 meV**, very close to the isolated
+2D donor (-21.90 meV). The donor dominates over the structural confinement almost everywhere;
+the structure only matters at the chain ends and at the material changes (`d = 0, 10 nm`).
+
+### 7.3 The critical field is inversely proportional to `d`
+
+| `d` (nm) | `F_critical` (kV/cm) |
+|---|---|
+| -10 | 1.200 |
+| 0 | 1.000 |
+| 10 | 0.800 |
+
+A more separated chain is **easier** to polarize. This is the opposite of the naive expectation
+(more separation → stronger field). The reason is that the electron is already more confined in
+the separated regime, so less field is needed to push it out.
+
+### 7.4 The fifth dot can be a donor or an acceptor
+
+- `R_5 < 30 nm`: the fifth dot is too small; it **gives** the electron to the other four. It acts
+  as a **donor**.
+- `R_5 = 30 nm`: the fifth level joins the first sub-band.
+- `R_5 > 30 nm`: the fifth dot is the largest cavity; the electron **prefers** it. It acts as an
+  **acceptor** and the level descends monotonically.
+
+The asymmetry also affects the dipole hierarchy: in the symmetric chain `|p_1| < |p_2|`, but for
+`R_5 = 50 nm` the relation can become `|p_1| > |p_2|`.
+
+### 7.5 No real crossings: Von Neumann–Wigner
+
+When the descending fifth level meets a chain state with the **same s-type symmetry**, the two
+levels repel instead of crossing. This is the anticrossing around `R_5 = 35 nm` in
+`figures/EvsR5_noImpureza_orbitales.png`. The orbitals hybridize and the charge transfer becomes
+asymmetric.
+
+## 8. Caveats
 
 - The model is **2D** (in-plane confinement); it does not include the z-direction or strain.
 - A single donor is considered; donor–donor interaction is absent.

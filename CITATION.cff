@@ -15,6 +15,9 @@ type: thesis
 date-released: 2026-11-16
 license: MIT
 repository-code: "https://github.com/danielparra2/quantum-dot-chain-impurity"
+notes: >-
+  BSc Physics thesis directed by Willian Gutiérrez Niño at Universidad
+  Industrial de Santander (UIS). Laureate thesis, grade 5.0.
 keywords:
   - quantum dots
   - donor impurity
@@ -22,4 +25,6 @@ keywords:
   - COMSOL
   - GaAs/AlGaAs
   - optoelectronics
+  - electron localization
+  - structural asymmetry
   - scientific computing
