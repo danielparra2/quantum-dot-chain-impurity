@@ -60,7 +60,7 @@ reaching the boundary (finite-size check: `R = 300 nm` changes the levels by les
 - Quadratic Lagrange elements (P2) for the wavefunction.
 - The generalized eigenvalue problem `K u = E M u` is solved with a shift-invert eigensolver.
 - The same strategy was reproduced from scratch in Python in the companion repository
-  `hydrogenic-atom-2d-fem` (in preparation) to validate the method independently of COMSOL.
+  [`2d-hydrogen-atom-hydrogenic-impurity`](https://github.com/danielparra2/2d-hydrogen-atom-hydrogenic-impurity) to validate the method independently of COMSOL.
 
 ## 4. COMSOL export format
 
