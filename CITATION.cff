@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this material, please cite it as below."
+title: "Effect of a donor impurity on the optoelectronic properties of a linear quantum dot chain"
+abstract: >-
+  Finite-element simulations of a donor impurity inside a linear chain of five
+  laterally coupled GaAs/AlGaAs quantum dots. The repository contains the raw
+  COMSOL exports, the Python/Jupyter analysis and the final figures of the
+  BSc Physics thesis.
+authors:
+  - family-names: Parra Parra
+    given-names: Daniel
+    email: sasukeda25@gmail.com
+    affiliation: Universidad Industrial de Santander (UIS)
+type: thesis
+date-released: 2026-11-16
+license: MIT
+repository-code: "https://github.com/danielparra2/quantum-dot-chain-impurity"
+keywords:
+  - quantum dots
+  - donor impurity
+  - finite element method
+  - COMSOL
+  - GaAs/AlGaAs
+  - optoelectronics
+  - scientific computing
