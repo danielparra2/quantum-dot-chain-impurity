@@ -1,35 +1,22 @@
 # Notebooks
 
-Run them in this order:
+| Notebook | Purpose | Runtime |
+|---|---|---|
+| `analysis.ipynb` | The three effects of the thesis: impurity position, non-uniformity and electric field | ~1 min |
 
-| # | Notebook | Purpose | Runtime |
-|---|---|---|---|
-| 01 | `01_data_pipeline.ipynb` | Read the 32 COMSOL exports, inspect the headers, sort eigenvalues into modes. | seconds |
-| 02 | `02_results_figures.ipynb` | Rebuild the final thesis figures. | ~1 min |
-| 03 | `03_dipole_analysis.ipynb` | Extract `p₁`, `p₂` and `F_critical` with the two-line fit. | seconds |
+Shared helpers live in the `qdchain` package at the repository root:
 
-Shared helpers live in `chain_utils.py`:
+- `load()` → read `data/eigenvalues.csv`
+- `case(effect, d_nm, ...)` → select one physical dataset
+- `modes(...)` → pivot the eigenvalues into `VP_1`, `VP_2`, ...
+- `fit_two_lines(...)` → `p1`, `p2`, `F_critical`
 
-- `read_comsol(path)` → `(DataFrame, header)`
-- `load_all()` → `(dict of DataFrames, provenance DataFrame)`
-- `organize(df)` → mode-sorted table (`VP_1`, `VP_2`, ...)
-- `fit_two_lines(df)` → `p₁`, `p₂`, `F_critical`
-
-## Data conventions
-
-- Every `.txt` has **8 header lines** followed by two columns: `X` and `eigenvalue` (eV).
-- `X` is in **metres** for position scans and in **kV/cm** for field scans.
-- The raw files are never modified by the notebooks.
-
-## Run
+Run from the repository root:
 
 ```bash
 pip install -r ../requirements.txt
-jupyter lab 01_data_pipeline.ipynb
+jupyter lab analysis.ipynb
 ```
 
-## Note
-
-The committed notebooks have **no outputs**. Running them regenerates the
-figures and writes them to `../figures/`. The published PNGs are already in
-the repository, so you do not need to run anything to read the results.
+The committed notebook has no outputs. Running it regenerates the figures in
+`../figures/`.
