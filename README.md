@@ -67,7 +67,7 @@ $$
 | a* | 10.19 nm | Effective Bohr radius |
 | Ry* | 5.478 meV | Effective Rydberg |
 
-Solved with 2D finite elements (COMSOL), quadratic Lagrange elements on an unstructured triangular mesh with geometric refinement towards the donor. Generalized eigenvalue problem `K u = E M u`, shift-invert solver. Validation against the exact 2D donor: **≤ 0.008 meV**. The same problem was independently cross-checked with a from-scratch FEM code: [`hydrogen-atom-2d-vs-3d-impurity`](https://github.com/danielparra2/hydrogen-atom-2d-vs-3d-impurity).
+Solved with 2D finite elements (COMSOL), quadratic Lagrange elements on an unstructured triangular mesh with geometric refinement towards the donor. Generalized eigenvalue problem `K u = E M u`, shift-invert solver. Validation against the exact 2D donor: **≤ 0.008 meV**. The same problem was independently cross-checked with a from-scratch FEM code: [`2d-hydrogen-atom-hydrogenic-impurity`](https://github.com/danielparra2/2d-hydrogen-atom-hydrogenic-impurity).
 
 The full method, mesh strategy and export procedure are in [`docs/metodo.md`](docs/metodo.md).
 
@@ -82,7 +82,7 @@ The uniform chain (all five dots of radius R = 30 nm, equal gaps d) is scanned w
 </p>
 
 <p align="center">
-  <sub><b>Energy vs impurity position.</b> First ten eigenvalues vs x<sub>i</sub> for d = −10, 0 and 10 nm (from <code>data/evs_xi.csv</code>). The ground state is pinned near <b>−21.41 meV</b>, close to the isolated 2D donor (−21.90 meV): <b>Coulomb wins over confinement</b>. The inset resolves the sub-meV oscillations.</sub>
+  <sub><b>Energy vs impurity position.</b> First ten eigenvalues vs x<sub>i</sub> for d = −10, 0 and 10 nm (from <code>data/eigenvalues.csv</code>). The ground state is pinned near <b>−21.41 meV</b>, close to the isolated 2D donor (−21.90 meV): <b>Coulomb wins over confinement</b>. The inset resolves the sub-meV oscillations.</sub>
 </p>
 
 <p align="center">
@@ -97,7 +97,7 @@ The uniform chain (all five dots of radius R = 30 nm, equal gaps d) is scanned w
 
 ## 4. Effect of non-uniformity, no impurity
 
-The first four dots keep R = 30 nm; the fifth dot has radius R<sub>5</sub>, which scans from 10 to 60 nm. No impurity is present. The data are in `data/evs_r5.csv`.
+The first four dots keep R = 30 nm; the fifth dot has radius R<sub>5</sub>, which scans from 10 to 60 nm. No impurity is present. The data are in `data/eigenvalues.csv`.
 
 <p align="center">
   <img src="figures/EvsR5_noImpureza_orbitales.png" alt="Energy versus R5 with orbital insets at R5 = 10, 35 and 50 nm" width="90%">
@@ -115,7 +115,7 @@ The first four dots keep R = 30 nm; the fifth dot has radius R<sub>5</sub>, whic
 
 ## 5. Effect of electric field
 
-An electric field F is applied along the chain axis. The ground state changes character at an anticrossing (localization transition). Data in `data/evs_f.csv`.
+An electric field F is applied along the chain axis. The ground state changes character at an anticrossing (localization transition). Data in `data/eigenvalues.csv`.
 
 <p align="center">
   <img src="figures/animations/field_battery_devil.gif" alt="A battery applies an electric field and a cartoon devil drags the electron across the chain" width="62%">
@@ -139,32 +139,27 @@ An electric field F is applied along the chain axis. The ground state changes ch
 
 ```bash
 pip install -r requirements.txt
-jupyter notebook
+python scripts/make_figures.py     # regenerate the five figures
+jupyter lab notebooks/analysis.ipynb
 ```
 
-No FEM is re-run. The notebooks only read the existing COMSOL exports from `data/raw/` and the analysis-ready CSVs from `data/`.
+No FEM is re-run. The notebook and the figure script read the single tidy table
+`data/eigenvalues.csv`, which already contains every sweep, mode and eigenvalue.
 
 | Notebook | What it does |
 |---|---|
-| [`01_data_pipeline.ipynb`](notebooks/01_data_pipeline.ipynb) | Reads the exports, sorts eigenvalues into modes, explains units and pitfalls |
-| [`02_results_figures.ipynb`](notebooks/02_results_figures.ipynb) | Rebuilds the final thesis figures step by step |
-| [`03_dipole_analysis.ipynb`](notebooks/03_dipole_analysis.ipynb) | Extracts p₁, p₂ and the critical field |
+| [`analysis.ipynb`](notebooks/analysis.ipynb) | The three effects of the thesis, step by step |
 
 **Data layout**
 
-| Family | Files | Location | What it scans |
-|---|---|---|---|
-| Uniform chain, E vs x<sub>i</sub> | `caso1/2_2/3.txt` | `data/raw/` | x<sub>i</sub> for d = −10, 0, 10 nm |
-| Uniform chain, E vs F | `c1_F, c2_2_F, c3_F.txt` | `data/raw/` | F from −5 to 10 kV/cm |
-| Non-uniform, no impurity | `EvsR5sind*.txt` | `data/raw/` | R₅ for d = −10, 0, 10 nm |
-| Non-uniform, impurity at x<sub>i</sub> = 0, R₁, R₅ | `EvsR5xi=*.txt` | `data/raw/` | R₅ |
-| Fixed R₅ = 10, 50 nm | `EvsxiR5=*.txt` | `data/raw/` | x<sub>i</sub> |
-| Asymmetric chain, dipole | `AEvsF_R10/R50*.txt` | `data/raw/` | F for R = 10, 50 nm |
-| Analysis-ready (impurity position) | `evs_xi.csv` | `data/` | d_nm, xi_m, E_eV |
-| Analysis-ready (non-uniformity) | `evs_r5.csv` | `data/` | d_nm, R5_m, E_eV |
-| Analysis-ready (electric field) | `evs_f.csv` | `data/` | d_nm, F_kVcm, E_eV |
+| File | Contents |
+|---|---|
+| `data/eigenvalues.csv` | One row per eigenvalue: `effect`, `chain`, `d_nm`, `R5_nm`, `xi_nm`, `sweep`, `sweep_value`, `sweep_unit`, `mode`, `E_eV`, `source_file` (18 exports, 117,335 rows) |
+| `data/manifest.csv` | COMSOL model, version and export date for each of the 18 source files |
 
-Every raw file is mapped to its COMSOL model, version and export date in [`data/manifest.csv`](data/manifest.csv).
+The tidy table is built from the original COMSOL exports; the raw `.txt` files
+are not included in the repository. [`data/manifest.csv`](data/manifest.csv)
+keeps the provenance of every source file.
 
 ---
 
@@ -174,7 +169,20 @@ The complete manuscript (derivations, COMSOL method, extended results) is in [`T
 
 ---
 
-## 8. Citation and license
+## 8. Limitations
+
+- The model is two-dimensional (in-plane), with a circular domain and a fixed
+  effective mass `m* = 0.067 m0` and permittivity `εr = 12.9` for GaAs.
+- The Hamiltonian uses the effective-mass approximation; band non-parabolicity
+  and the full AlGaAs barrier are not included.
+- The eigenvalues are the existing COMSOL exports. The FEM is not re-run by the
+  notebooks, and the `.mph` models are not part of this repository.
+- The critical field and the dipole plateaus come from a two-line fit around
+  the anticrossing; they are estimates for the exported parameter ranges.
+
+---
+
+## 9. Citation and license
 
 If you use this material, please cite it via [`CITATION.cff`](CITATION.cff).
 

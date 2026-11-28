@@ -60,7 +60,7 @@ asymmetric. This is the mechanism behind the sharp dipole jump.
 
 ## What is in this repository
 
-- The raw COMSOL eigenvalue exports.
+- The consolidated eigenvalue table (`data/eigenvalues.csv`) and its provenance.
 - The Python analysis and the final figures.
 - The animations used in the defense.
 - The method, parameters and validation.

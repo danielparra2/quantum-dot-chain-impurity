@@ -79,29 +79,26 @@ Each `.txt` file is a 1D export with exactly **8 header lines** followed by two 
 ...
 ```
 
-The notebooks read the files with:
+The repository does not ship the raw exports. They were consolidated into a single
+tidy table, `data/eigenvalues.csv`, with one row per eigenvalue:
 
-```python
-pd.read_csv(path, skiprows=8, sep=r"\s+", names=["X", "Valor_propio"], engine="python")
-```
-
-### Units of the first column
-
-| Dataset family | `X` meaning | Unit |
+| `sweep` | `sweep_value` | `sweep_unit` |
 |---|---|---|
-| `caso*.txt`, `EvsxiR5=*.txt` | impurity position `x_i` | **m** (notebook converts to nm) |
-| `EvsR5*.txt` | inter-dot distance `R_5` | **m** (notebook converts to nm) |
-| `c*_F.txt`, `AEvsF*.txt` | electric field `F` | **kV/cm** |
+| `xi` | impurity position `x_i` | **nm** |
+| `R5` | fifth-dot radius `R_5` | **nm** |
+| `F` | electric field `F` | **kV/cm** |
 
-The second column is the eigenvalue in **eV**. No rescaling or smoothing is applied to the raw
-exports.
+The energy is stored in `E_eV` in **eV**. No rescaling or smoothing is applied
+to the exports; the only conversion is metres to nanometres for readability.
+The provenance of each source file is kept in `data/manifest.csv`.
 
 ## 5. Eigenvalue ordering
 
-COMSOL returns eigenvalues unsorted for each value of the sweep variable. `01_data_pipeline.ipynb`
-sorts by `(X, eigenvalue)` and assign mode indices with a cumulative count, so that mode 1 is always the
-ground state, mode 2 the first excited state, and so on. This step is essential before plotting
-or comparing curves.
+COMSOL returns eigenvalues unsorted for each value of the sweep variable. The table already
+contains a `mode` column: at every sweep value the eigenvalues are sorted and numbered, so that
+mode 1 is always the ground state, mode 2 the first excited state, and so on. `qdchain.modes`
+pivots this column into `VP_1`, `VP_2`, ... This step is essential before plotting or comparing
+curves.
 
 ## 6. Dipole analysis
 
@@ -115,8 +112,8 @@ m = Σ (x - x0)(y - y0) / Σ (x - x0)²
 with the two segments joined at the local maximum `(x0, y0)` of the selected energy branch. The
 fitted slopes are then converted to the `p1` / `p2` plateau values reported in the figures.
 
-The implementation is shared in `notebooks/chain_utils.py` (`fit_two_lines`) and demonstrated in
-`notebooks/03_dipole_analysis.ipynb`.
+The implementation is shared in `qdchain/physics.py` (`fit_two_lines`) and demonstrated in
+`notebooks/analysis.ipynb`.
 
 ## 7. Counterintuitive results
 
