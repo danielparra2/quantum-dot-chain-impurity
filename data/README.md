@@ -1,49 +1,39 @@
 # Data
 
-Raw eigenvalue exports from COMSOL Multiphysics for the five-dot chain simulations.
+One tidy table with the eigenvalue exports from COMSOL Multiphysics for the
+five-dot chain simulations.
 
-- 32 `.txt` files, 8.3 MB total.
-- Each file keeps its original COMSOL header (model, version, date, nodes).
-- `manifest.csv` maps every file to its source model and physical case.
-- `consolidado.csv.gz` is **not** committed; generate it with `scripts/consolidar.py` if you
-  want a single tabular file.
+## `eigenvalues.csv`
 
-## Format
+One row per eigenvalue. 117,335 rows from 18 COMSOL exports.
 
-```
-% Model:              qd5=10_d=0.mph
-% Version:            COMSOL 6.4.0.429
-% Date:               Aug 23 2026, 12:19
-% Dimension:          1
-% Nodes:              4020
-% Expressions:        1
-% Description:        ...
-% Length unit:        m
-<X> <eigenvalue>
-```
+| Column | Meaning |
+|---|---|
+| `effect` | `impurity_position`, `non_uniformity` or `electric_field` |
+| `chain` | `uniform` or `non_uniform` |
+| `d_nm` | inter-dot gap, in nanometres |
+| `R5_nm` | fifth-dot radius when it is fixed (empty otherwise) |
+| `xi_nm` | impurity position when it is fixed (empty if swept or absent) |
+| `sweep` | swept variable: `xi`, `R5` or `F` |
+| `sweep_value` | value of the swept variable, in `sweep_unit` |
+| `sweep_unit` | `nm` for positions and radii, `kV/cm` for the field |
+| `mode` | eigenvalue rank at a fixed sweep value (1 = ground state) |
+| `E_eV` | eigenvalue in electron-volts |
+| `source_file` | original COMSOL export |
 
-The first column is the sweep variable and the second is the eigenvalue in eV.
+The positions and radii are stored in nanometres, not metres, so the table can
+be read directly. The modes are sorted at every sweep value: `mode = 1` is
+always the ground state.
 
-| Sweep variable | Unit | Typical range |
-|---|---|---|
-| impurity position `x_i` | m | `-1.8e-7 … 2.1e-7` |
-| inter-dot distance `R_5` | m | `1e-8 … 6e-8` |
-| electric field `F` | kV/cm | `-5 … 10` |
+## `manifest.csv`
 
-Do **not** merge the files by hand: the per-file headers are the provenance record. Use
-`manifest.csv` (already tracked) or run:
+Provenance of the 18 source exports: COMSOL model, version, export date, case,
+quantity, row count and the swept range. The raw `.txt` files are not included
+in the repository.
 
-```bash
-python scripts/consolidar.py
-```
-
-which writes a gzip-compressed CSV with an extra `file` column.
-
-## Regenerating the manifest
+## Reproducing the analysis
 
 ```bash
-python scripts/generar_manifest.py
+python scripts/make_figures.py
+jupyter lab notebooks/analysis.ipynb
 ```
-
-The script only reads the first 8 lines of each file plus the data columns; it does not modify
-the exports.

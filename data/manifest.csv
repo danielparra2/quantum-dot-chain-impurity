@@ -1,33 +1,19 @@
 file,comsol_model,comsol_version,export_date,case,quantity,rows,x_min,x_max
-AEvsF_R10_d_-10.txt,qd5=10_d=-10.mph,COMSOL 6.4.0.429,"Aug 23 2026, 12:20",Asymmetric chain,Energy vs electric field,4020,-5,5
-AEvsF_R10_d_0.txt,qd5=10_d=0.mph,COMSOL 6.4.0.429,"Aug 23 2026, 12:19",Asymmetric chain,Energy vs electric field,4020,-5,5
-AEvsF_R10_d_10.txt,qd5=10_d=10.mph,COMSOL 6.4.0.429,"Aug 23 2026, 12:18",Asymmetric chain,Energy vs electric field,4020,-5,5
-AEvsF_R50_d_-10.txt,qd5=50_d=-10.mph,COMSOL 6.4.0.429,"Aug 23 2026, 12:43",Asymmetric chain,Energy vs electric field,4020,-5,5
-AEvsF_R50_d_0.txt,qd5=50_d=0.mph,COMSOL 6.4.0.429,"Aug 23 2026, 12:44",Asymmetric chain,Energy vs electric field,4020,-5,5
-AEvsF_R50_d_10.txt,qd5=50_d=10.mph,COMSOL 6.4.0.429,"Aug 23 2026, 12:44",Asymmetric chain,Energy vs electric field,4020,-5,5
 EvsR5sind-10.txt,D=-10.mph,COMSOL 6.4.0.293,"Sep 16 2026, 14:37",Non-uniform chain (no impurity),Energy vs R5,4040,1e-08,6e-08
 EvsR5sind0.txt,D=0.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:47",Non-uniform chain (no impurity),Energy vs R5,4040,1e-08,6e-08
 EvsR5sind10.txt,D=10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:47",Non-uniform chain (no impurity),Energy vs R5,4040,1e-08,6e-08
 EvsR5xi=0d-10.txt,D=-10.mph,COMSOL 6.4.0.429,"Aug 21 2026, 16:19",Non-uniform chain (impurity at xi=0),Energy vs R5,4040,1e-08,6e-08
 EvsR5xi=0d0.txt,D=0.mph,COMSOL 6.4.0.429,"Aug 21 2026, 15:51",Non-uniform chain (impurity at xi=0),Energy vs R5,4040,1e-08,6e-08
 EvsR5xi=0d10.txt,D=10.mph,COMSOL 6.4.0.429,"Aug 21 2026, 15:50",Non-uniform chain (impurity at xi=0),Energy vs R5,4040,1e-08,6e-08
-EvsR5xi=R1d-10.txt,D=-10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:55",Non-uniform chain (impurity at xi=R1),Energy vs R5,4040,1e-08,6e-08
-EvsR5xi=R1d0.txt,D=0.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:54",Non-uniform chain (impurity at xi=R1),Energy vs R5,4040,1e-08,6e-08
-EvsR5xi=R1d10.txt,D=10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:55",Non-uniform chain (impurity at xi=R1),Energy vs R5,4040,1e-08,6e-08
-EvsR5xi=R5d-10.txt,D=-10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:59",Non-uniform chain (impurity at xi=R5),Energy vs R5,4040,1e-08,6e-08
-EvsR5xi=R5d0.txt,D=0.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:58",Non-uniform chain (impurity at xi=R5),Energy vs R5,4040,1e-08,6e-08
-EvsR5xi=R5d10.txt,D=10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 17:58",Non-uniform chain (impurity at xi=R5),Energy vs R5,4040,1e-08,6e-08
 EvsxiR5=10d-10.txt,d=-10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 19:02","Non-uniform chain, R5=10 nm",Energy vs impurity position,8840,-1.3e-07,9e-08
 EvsxiR5=10d0.txt,d=0.mph,COMSOL 6.3.0.290,"Jul 14 2026, 19:02","Non-uniform chain, R5=10 nm",Energy vs impurity position,10440,-1.5e-07,1.1e-07
 EvsxiR5=10d10.txt,d=10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 19:02","Non-uniform chain, R5=10 nm",Energy vs impurity position,12040,-1.7e-07,1.3e-07
 EvsxiR5=50d-10.txt,rd=-10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 19:06","Non-uniform chain, R5=50 nm",Energy vs impurity position,12040,-1.3e-07,1.7e-07
 EvsxiR5=50d0.txt,rd=0.mph,COMSOL 6.3.0.290,"Jul 14 2026, 19:06","Non-uniform chain, R5=50 nm",Energy vs impurity position,13640,-1.5e-07,1.9e-07
 EvsxiR5=50d10.txt,rd=10.mph,COMSOL 6.3.0.290,"Jul 14 2026, 19:06","Non-uniform chain, R5=50 nm",Energy vs impurity position,15240,-1.7e-07,2.1e-07
-c1_F.txt,caso 1 d=0.mph,COMSOL 6.4.0.429,"Aug 25 2026, 10:09",Uniform chain,Energy vs electric field,2010,-5,5
-c2_2_F.txt,caso 2 d=10.mph,COMSOL 6.4.0.429,"Aug 25 2026, 10:12",Uniform chain,Energy vs electric field,4020,-5,5
-c2_F.txt,caso 2 campo.mph,COMSOL 6.3.0.290,"Jun 28 2026, 11:35",Uniform chain,Energy vs electric field,7550,-5,10
-c3_F.txt,caso 3 campo.mph,COMSOL 6.4.0.429,"Aug 25 2026, 09:45",Uniform chain,Energy vs electric field,1010,-2,3
+c1_F.txt,caso 1 d=0.mph,COMSOL 6.4.0.429,"Aug 25 2026, 10:09",Uniform chain,Energy vs electric field,2010,-5.0,5.0
+c2_2_F.txt,caso 2 d=10.mph,COMSOL 6.4.0.429,"Aug 25 2026, 10:12",Uniform chain,Energy vs electric field,4020,-5.0,5.0
+c3_F.txt,caso 3 campo.mph,COMSOL 6.4.0.429,"Aug 25 2026, 09:45",Uniform chain,Energy vs electric field,1010,-2.0,3.0
 caso1.txt,caso 1.mph,COMSOL 6.3.0.290,"Jul 11 2026, 15:11",Uniform chain,Energy vs impurity position,4515,-1.5e-07,1.5e-07
-caso2.txt,caso 2 - 75 nm.mph,COMSOL 6.3.0.290,"Jul 11 2026, 15:13",Uniform chain,Energy vs impurity position,5415,-1.8e-07,1.8e-07
 caso2_2.txt,caso 2 - 75 nm.mph,COMSOL 6.3.0.290,"Jul 7 2026, 07:21",Uniform chain,Energy vs impurity position,5415,-1.8e-07,1.8e-07
 caso3.txt,caso 3 -un solo valor - copia - copia.mph,COMSOL 6.3.0.290,"Jun 28 2026, 09:29",Uniform chain,Energy vs impurity position,3885,-1.29e-07,1.29e-07
